@@ -18,9 +18,11 @@ public class GameController : Controller
         {
             newGame = GameManager.StartGame(gameRequest.width, gameRequest.height, gameRequest.mines_count);
         }
-        catch (ArgumentException e)
+        catch (Exception e)
         {
-            return BadRequest(JsonSerializer.Serialize(new ErrorResponse() {error = e.Message}));
+            return BadRequest(e is ArgumentException 
+                ? JsonSerializer.Serialize(new ErrorResponse() { error = e.Message }) 
+                : "Произошла непредвиденная ошибка");
         }
 
         var gameState = new GameTurnRequest()
@@ -44,9 +46,11 @@ public class GameController : Controller
         {
             game.MakeTurn(gameInfo.row, gameInfo.col);
         }
-        catch (ArgumentException e)
+        catch (Exception e)
         {
-            return BadRequest(JsonSerializer.Serialize(new ErrorResponse() {error = e.Message}));
+            return BadRequest(e is ArgumentException 
+                ? JsonSerializer.Serialize(new ErrorResponse() { error = e.Message }) 
+                : "Произошла непредвиденная ошибка");
         }
         
         var gameState = new GameTurnRequest()
