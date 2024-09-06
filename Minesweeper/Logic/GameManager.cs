@@ -3,6 +3,8 @@ namespace Minesweeper.Logic;
 public class GameManager
 {
     private Dictionary<string, Game> _games = new();
+    private const int MinFieldSize = 2;
+    private const int MaxFieldSize = 30;
 
     public GameManager()
     {
@@ -11,7 +13,7 @@ public class GameManager
 
     public Game StartGame(int width, int height, int minesCount)
     {
-        if (width < 2 || width > 30 || height < 2 || height > 30)
+        if (width < MinFieldSize || width > MaxFieldSize || height < MinFieldSize || height > MaxFieldSize)
         {
             throw new ArgumentException("Ширина поля должна быть не менее 2 и не более 30");
         }
